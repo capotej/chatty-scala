@@ -16,7 +16,7 @@ import com.twitter.finagle.http.Http
  */
 object App {
   class ChatService extends Service[HttpRequest, HttpResponse] {
-    val uiTemplate = scala.io.Source.fromFile("index.html").mkString
+    def uiTemplate = scala.io.Source.fromFile("index.html").mkString
 
     def The404Template = {
       <h1>404</h1>
