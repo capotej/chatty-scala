@@ -17,10 +17,31 @@ import com.twitter.finagle.http.Http
 object App {
  
   class ChatService extends Service[HttpRequest, HttpResponse] {
-    def apply(request: HttpRequest) = {
+    def uiTemplate = {
+      <h1>hello</h1>
+    }
+
+    def The404Template = {
+      <h1>404</h1>
+    }
+
+    def frontpageRoute = {
       val response = new DefaultHttpResponse(HTTP_1_1, OK)
-      response.setContent(copiedBuffer("hello world", UTF_8))
+      response.setContent(copiedBuffer(uiTemplate.toString(), UTF_8))
       Future.value(response)
+    }
+
+    def The404Route = {
+      val response = new DefaultHttpResponse(HTTP_1_1, OK)
+      response.setContent(copiedBuffer(The404Template.toString(), UTF_8))
+      Future.value(response)
+    }
+
+    def apply(request: HttpRequest) = {
+      request.getUri match {
+        case "/" => frontpageRoute
+        case _ => The404Route
+      }
     }
   } 
  
