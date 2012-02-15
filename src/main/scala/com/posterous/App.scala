@@ -1,20 +1,15 @@
 package com.posterous
 
-import java.net.InetSocketAddress;
-
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.handler.codec.http.DefaultHttpResponse;
-import org.jboss.netty.handler.codec.http.HttpRequest;
-import org.jboss.netty.handler.codec.http.HttpResponse;
-import org.jboss.netty.handler.codec.http.HttpResponseStatus;
-import org.jboss.netty.handler.codec.http.HttpVersion;
-
-import com.twitter.finagle.Service;
-import com.twitter.finagle.builder.ServerBuilder;
-import com.twitter.finagle.http.Http;
-import com.twitter.util.Future;
-import com.twitter.util.FutureEventListener;
-import com.twitter.util.FutureTransformer;
+import com.twitter.finagle.{Service, SimpleFilter}
+import org.jboss.netty.handler.codec.http._
+import org.jboss.netty.handler.codec.http.HttpResponseStatus._
+import org.jboss.netty.handler.codec.http.HttpVersion.HTTP_1_1
+import org.jboss.netty.buffer.ChannelBuffers.copiedBuffer
+import org.jboss.netty.util.CharsetUtil.UTF_8
+import com.twitter.util.Future
+import java.net.InetSocketAddress
+import com.twitter.finagle.builder.{Server, ServerBuilder}
+import com.twitter.finagle.http.Http
 
 /**
  * @author ${user.name}
@@ -37,6 +32,8 @@ object App {
       .bindTo(new InetSocketAddress(9090))
       .name("httpserver")
       .build(chatService)
+
+    println("server started on 9090")
   }
 
 }
