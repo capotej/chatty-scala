@@ -15,7 +15,6 @@ import com.twitter.finagle.http.Http
  * @author ${user.name}
  */
 object App {
- 
   class ChatService extends Service[HttpRequest, HttpResponse] {
     val uiTemplate = scala.io.Source.fromFile("index.html").mkString
 
@@ -43,31 +42,36 @@ object App {
 
     def getRoutes(request: HttpRequest) = {
       request.getUri match {
-        case "/" => frontpageRoute
+        case "/"         => frontpageRoute
         case "/messages" => getMessageRoute
-        case _ => The404Route
+        case _           => The404Route
       }
-    } 
-
+    }
 
     def postRoutes(request: HttpRequest) = {
       request.getUri match {
         case "/" => frontpageRoute
-        case _ => The404Route
+        case _   => The404Route
       }
     }
 
     def apply(request: HttpRequest) = {
       request.getMethod.getName match {
-        case "GET" => getRoutes(request)
+        case "GET"  => getRoutes(request)
         case "POST" => postRoutes(request)
-        case _ => getRoutes(request)
+        case _      => getRoutes(request)
       }
     }
-  } 
- 
+  }
+
   def main(args : Array[String]) {
     val chatService = new ChatService
+
+    // Create a bunch of messages in teh queue
+    println( "Pushing a bunch of fake messages" )
+    for (i <- 1.to(10)) {
+      ChatQueue.push( scala.util.Random.nextInt.toString )
+    }
 
     val server: Server = ServerBuilder()
       .codec(Http())
@@ -77,5 +81,4 @@ object App {
 
     println("server started on 9090")
   }
-
 }
