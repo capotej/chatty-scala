@@ -15,15 +15,15 @@ import com.twitter.finagle.http.Http
  * @author ${user.name}
  */
 object App {
- 
   class ChatService extends Service[HttpRequest, HttpResponse] {
     def apply(request: HttpRequest) = {
+
       val response = new DefaultHttpResponse(HTTP_1_1, OK)
       response.setContent(copiedBuffer("hello world", UTF_8))
       Future.value(response)
     }
-  } 
- 
+  }
+
   def main(args : Array[String]) {
     val chatService = new ChatService
 
@@ -35,5 +35,4 @@ object App {
 
     println("server started on 9090")
   }
-
 }
