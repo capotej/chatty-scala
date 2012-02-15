@@ -17,9 +17,7 @@ import com.twitter.finagle.http.Http
 object App {
  
   class ChatService extends Service[HttpRequest, HttpResponse] {
-    def uiTemplate = {
-      <h1>hello</h1>
-    }
+    val uiTemplate = scala.io.Source.fromFile("index.html").mkString
 
     def The404Template = {
       <h1>404</h1>
@@ -37,10 +35,33 @@ object App {
       Future.value(response)
     }
 
-    def apply(request: HttpRequest) = {
+    def Post404Route = {
+      val response = new DefaultHttpResponse(HTTP_1_1, OK)
+      response.setContent(copiedBuffer("errorrrrrr", UTF_8))
+      Future.value(response)
+    }
+
+
+    def getRoutes(request: HttpRequest) = {
       request.getUri match {
         case "/" => frontpageRoute
         case _ => The404Route
+      }
+    } 
+
+
+    def postRoutes(request: HttpRequest) = {
+      request.getUri match {
+        case "/" => frontpageRoute
+        case _ => Post404Route
+      }
+    }
+
+    def apply(request: HttpRequest) = {
+      request.getMethod.getName match {
+        case "GET" => getRoutes(request)
+        case "POST" => postRoutes(request)
+        case _ => getRoutes(request)
       }
     }
   } 
