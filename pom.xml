@@ -32,6 +32,12 @@
       <name>twttr</name>
       <url>http://maven.twttr.com</url>
     </repository>
+
+
+    <repository>
+      <id>repo.codahale.com</id>
+      <url>http://repo.codahale.com</url>
+    </repository>
   </repositories>
 
   <pluginRepositories>
@@ -59,6 +65,13 @@
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>
       <version>${scala.version}</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>com.codahale</groupId>
+      <artifactId>jerkson_${scala.version}</artifactId>
+      <version>0.4.2</version>
     </dependency>
 
     <!-- Test

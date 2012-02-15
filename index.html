@@ -5,6 +5,9 @@
     <script type="text/javascript">
       var updateShit = function(){
         console.log('checking')
+          $.get('/messages', {}, function(data){
+              console.log(data);
+              });
       }
       $(function(){
           setInterval(updateShit, 1000) 

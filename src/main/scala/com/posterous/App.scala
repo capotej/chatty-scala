@@ -11,6 +11,8 @@ import java.net.InetSocketAddress
 import com.twitter.finagle.builder.{Server, ServerBuilder}
 import com.twitter.finagle.http.Http
 
+import com.codahale.jerkson.Json._
+
 /**
  * @author ${user.name}
  */
