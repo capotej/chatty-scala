@@ -20,9 +20,23 @@ import com.twitter.util.FutureTransformer;
  * @author ${user.name}
  */
 object App {
-  
+ 
+  class ChatService extends Service[HttpRequest, HttpResponse] {
+    def apply(request: HttpRequest) = {
+      val response = new DefaultHttpResponse(HTTP_1_1, OK)
+      response.setContent(copiedBuffer("hello world", UTF_8))
+      Future.value(response)
+    }
+  } 
+ 
   def main(args : Array[String]) {
-    println( "Hello World!" )
+    val chatService = new ChatService
+
+    val server: Server = ServerBuilder()
+      .codec(Http())
+      .bindTo(new InetSocketAddress(9090))
+      .name("httpserver")
+      .build(chatService)
   }
 
 }
