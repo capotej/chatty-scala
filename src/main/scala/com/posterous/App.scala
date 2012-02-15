@@ -35,16 +35,16 @@ object App {
       Future.value(response)
     }
 
-    def Post404Route = {
+    def getMessageRoute = {
       val response = new DefaultHttpResponse(HTTP_1_1, OK)
-      response.setContent(copiedBuffer("errorrrrrr", UTF_8))
+      response.setContent(copiedBuffer("An message", UTF_8))
       Future.value(response)
     }
-
 
     def getRoutes(request: HttpRequest) = {
       request.getUri match {
         case "/" => frontpageRoute
+        case "/messages" => getMessageRoute
         case _ => The404Route
       }
     } 
@@ -53,7 +53,7 @@ object App {
     def postRoutes(request: HttpRequest) = {
       request.getUri match {
         case "/" => frontpageRoute
-        case _ => Post404Route
+        case _ => The404Route
       }
     }
 
