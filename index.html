@@ -9,8 +9,10 @@
           console.log('checking for new messages')
           $.getJSON('/messages', { since_id: since_id }, function(data){
               since_id = data.since_id
+              console.log('recieved', data)
               $(data.mesgs).each(function(index, object){
                 $('#chat_winder').append(object + "<hr>")
+                window.scrollTo(0,document.body.scrollHeight);
                 })
           });
          
@@ -18,13 +20,16 @@
               if(event.keyCode == 13){
               var msg = $('#chat').val()
               $('#chat').val('')
+              console.log('sending', msg)
+              if(msg != ""){
               $.post('/messages?message=' + msg)
+              }
               }
           })
       }
 
       $(function(){
-          setInterval(updateShit, 1000) 
+          setInterval(updateShit, 100) 
       });
     </script>
   </head>
