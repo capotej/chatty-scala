@@ -51,8 +51,10 @@ object App {
       Future.value(response)
     }
 
-    def getRoutes(request:HttpRequest) = {
-      request.getUri match {
+    def getRoutes(request: HttpRequest) = {
+      var decoder = new QueryStringDecoder(request.getUri)
+     
+      decoder.getPath match {
         case "/"         => frontpageRoute
         case "/messages" => getMessageRoute(request)
         case _           => The404Route
