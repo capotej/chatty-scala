@@ -36,25 +36,25 @@ object App {
       Future.value(response)
     }
 
-    def getMessageRoute = {
+    def getMessageRoute(request:HttpRequest) = {
       val response = new DefaultHttpResponse(HTTP_1_1, OK)
-      val respStr = ChatQueue.messagesSince(0).mkString("\n")
+      val respStr  = generate(Map("mesgs" -> ChatQueue.messagesSince(0), "last_index" -> 10 ))
 
       response.setContent(copiedBuffer(respStr, UTF_8))
       Future.value(response)
     }
 
-    def postMessageRoute(request: HttpRequest) = {
+    def postMessageRoute(request:HttpRequest) = {
       val response = new DefaultHttpResponse(HTTP_1_1, OK)
 
       response.setContent( copiedBuffer("POST", UTF_8) )
       Future.value(response)
     }
 
-    def getRoutes(request: HttpRequest) = {
+    def getRoutes(request:HttpRequest) = {
       request.getUri match {
         case "/"         => frontpageRoute
-        case "/messages" => getMessageRoute
+        case "/messages" => getMessageRoute(request)
         case _           => The404Route
       }
     }
