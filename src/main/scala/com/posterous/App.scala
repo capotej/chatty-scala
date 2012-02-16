@@ -41,7 +41,7 @@ object App {
       val sinceId  = sinceIdStr.toInt
       val mesgs    = ChatQueue.messagesSince(sinceId)
 
-      val respStr  = generate(Map("mesgs" -> mesgs, "since_id" -> sinceId + mesgs.length ))
+      val respStr  = generate(Map("mesgs" -> mesgs, "since_id" -> (sinceId + mesgs.length).toString ))
 
       response.setContent(copiedBuffer(respStr, UTF_8))
       Future.value(response)
@@ -59,7 +59,7 @@ object App {
 
       decoder.getPath match {
         case "/"         => frontpageRoute
-        case "/messages" => getMessageRoute(decoder.getParameters().get("recipient").first)
+        case "/messages" => getMessageRoute(decoder.getParameters().get("recipient").toString)
         case _           => The404Route
       }
     }

@@ -3,15 +3,18 @@
     <title>Shatty</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript">
+
+      var since_id = 0
       var updateShit = function(){
-        console.log('checking')
-          $.get('/messages', {}, function(data){
+          console.log('checking for new messages')
+          $.get('/messages', { since_id: since_id }, function(data){
               console.log(data);
-              });
+          });
       }
+
       $(function(){
           setInterval(updateShit, 1000) 
-          });
+      });
     </script>
   </head>
   <body>
