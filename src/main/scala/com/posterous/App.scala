@@ -92,10 +92,10 @@ object App {
     val chatService = new ChatService
 
     // Create a bunch of messages in teh queue
-    println( "Pushing a bunch of fake messages" )
-    for (i <- 1.to(10)) {
-      ChatQueue.push( scala.util.Random.nextInt.toString )
-    }
+    //println( "Pushing a bunch of fake messages" )
+    //for (i <- 1.to(10)) {
+    //  ChatQueue.push( scala.util.Random.nextInt.toString )
+    //}
 
     val server: Server = ServerBuilder()
       .codec(Http())

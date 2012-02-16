@@ -5,6 +5,7 @@
     <script type="text/javascript">
 
       var since_id = 0
+      var name = prompt("enter your name")
       var updateShit = function(){
           console.log('checking for new messages')
           $.getJSON('/messages', { since_id: since_id }, function(data){
@@ -22,7 +23,7 @@
               $('#chat').val('')
               console.log('sending', msg)
               if(msg != ""){
-              $.post('/messages?message=' + msg)
+              $.post('/messages?message=' + name + ": " + msg)
               }
               }
           })
@@ -36,7 +37,7 @@
   <body>
     <div id="chat_winder">
     </div>
-    <input type="text" id="chat">
+    <input type="text" id="chat" size="150">
   </body>
 
 
