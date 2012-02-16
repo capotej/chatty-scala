@@ -7,9 +7,20 @@
       var since_id = 0
       var updateShit = function(){
           console.log('checking for new messages')
-          $.get('/messages', { since_id: since_id }, function(data){
-              console.log(data);
+          $.getJSON('/messages', { since_id: since_id }, function(data){
+              since_id = data.since_id
+              $(data.mesgs).each(function(index, object){
+                $('#chat_winder').append(object + "<hr>")
+                })
           });
+         
+          $('#chat').keyup(function(event){
+              if(event.keyCode == 13){
+              var msg = $('#chat').val()
+              $('#chat').val('')
+              $.post('/messages?message=' + msg)
+              }
+          })
       }
 
       $(function(){
@@ -18,7 +29,9 @@
     </script>
   </head>
   <body>
-    <h1>ads</h1>
+    <div id="chat_winder">
+    </div>
+    <input type="text" id="chat">
   </body>
 
 
