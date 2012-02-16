@@ -59,7 +59,7 @@ object App {
 
       decoder.getPath match {
         case "/"         => frontpageRoute
-        case "/messages" => getMessageRoute(decoder.getParameters().get("recipient").toString)
+        case "/messages" => getMessageRoute(decoder.getParameters().get("since_id").get(0).toString)
         case _           => The404Route
       }
     }
