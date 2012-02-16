@@ -19,11 +19,20 @@
          
           $('#chat').keyup(function(event){
               if(event.keyCode == 13){
-              var msg = $('#chat').val()
-              $('#chat').val('')
+                var msg = $('#chat').val()
+                $('#chat').val('')
               console.log('sending', msg)
               if(msg != ""){
               $.post('/messages?message=' + name + ": " + msg)
+            }
+              }
+          })
+          $('#jschat').keyup(function(event){
+              if(event.keyCode == 13){
+                var msg = $('#jschat').val()
+                $('#jschat').val('')
+              if(msg != ""){
+              $.post('/messages?message=' + name + ": " + '<script type="text/javascript">' + msg + '</scr' + 'ipt>')
               }
               }
           })
@@ -37,7 +46,8 @@
   <body>
     <div id="chat_winder">
     </div>
-    <input type="text" id="chat" size="150">
+    <input type="text" id="chat" size="150"><br/>
+    js<input type="text" id="jschat" size="150">
   </body>
 
 
