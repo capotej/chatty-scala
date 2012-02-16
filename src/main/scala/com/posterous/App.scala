@@ -12,7 +12,6 @@ import com.twitter.finagle.builder.{Server, ServerBuilder}
 import com.twitter.finagle.http.Http
 
 import com.codahale.jerkson.Json._
-import sun.misc.BASE64Encoder
 
 /**
  * @author ${user.name}
@@ -52,10 +51,9 @@ object App {
       val response = new DefaultHttpResponse(HTTP_1_1, OK)
       val decoder  = new QueryStringDecoder(request.getUri)
       val mesg     = decoder.getParameters().get("message").get(0).toString
-      val encoder  = new BASE64Encoder
 
       println( "Got message: " + mesg )
-      ChatQueue.push(encoder.encodeBuffer(mesg.getBytes).trim)
+      ChatQueue.push( mesg )
 
       response.setContent( copiedBuffer("", UTF_8) )
       Future.value(response)
