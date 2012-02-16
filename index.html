@@ -12,7 +12,7 @@
               since_id = data.since_id
               console.log('recieved', data)
               $(data.mesgs).each(function(index, object){
-                $('#chat_winder').append(object + "<hr>")
+                $('#chat_winder').append(window.atob(object.replace("\n","")) + "<hr>")
                 window.scrollTo(0,document.body.scrollHeight);
                 })
           });
