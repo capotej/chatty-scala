@@ -3,16 +3,18 @@
     <title>Shatty</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript">
+function htmlDecode(value){ 
+  return $('<div/>').html(value).text(); 
+}
 
       var since_id = 0
       var name = prompt("enter your name")
       var updateShit = function(){
-          console.log('checking for new messages')
           $.getJSON('/messages', { since_id: since_id }, function(data){
               since_id = data.since_id
-              console.log('recieved', data)
               $(data.mesgs).each(function(index, object){
-                $('#chat_winder').append(object + "<hr>")
+                console.log('recieved', object)
+                $('#chat_winder').append(htmlDecode(object) + "<hr>")
                 window.scrollTo(0,document.body.scrollHeight);
                 })
           });

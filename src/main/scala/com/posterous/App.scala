@@ -12,6 +12,7 @@ import com.twitter.finagle.builder.{Server, ServerBuilder}
 import com.twitter.finagle.http.Http
 
 import com.codahale.jerkson.Json._
+import org.apache.commons.lang.StringEscapeUtils.escapeHtml
 
 /**
  * @author ${user.name}
@@ -53,7 +54,7 @@ object App {
       val mesg     = decoder.getParameters().get("message").get(0).toString
 
       println( "Got message: " + mesg )
-      ChatQueue.push( mesg )
+      ChatQueue.push(escapeHtml(mesg))
 
       response.setContent( copiedBuffer("", UTF_8) )
       Future.value(response)
